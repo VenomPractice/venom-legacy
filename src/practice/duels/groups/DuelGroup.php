@@ -329,6 +329,23 @@ class DuelGroup
                 }
             }
 
+            if($this->isBoxing()) {
+                $P1Hits = count($this->playerHits);
+                $P2Hits = count($this->oppHits);
+
+                if($P1Hits == 100){
+                    $this->setResults($this->playerName, $this->opponentName);
+                    $this->endDuel();
+                    return;
+                }
+
+                if($P2Hits == 100){
+                    $this->setResults($this->opponentName, $this->playerName);
+                    $this->endDuel();
+                    return;
+                }
+            }
+
             if($duration >= $maxDuration) {
                 $this->setResults();
                 $this->endDuel();
@@ -372,6 +389,11 @@ class DuelGroup
     private function isSumo() : bool {
         return PracticeUtil::equals_string($this->queue, 'Sumo', 'sumo', 'SUMO', 'sumopvp');
     }
+
+    private function isBoxing() : bool {
+        return PracticeUtil::equals_string($this->queue, 'Boxing', 'boxing', 'BOXING', 'boxfight');
+    }
+
 
     private function updateScoreboards() : void {
 
@@ -454,6 +476,10 @@ class DuelGroup
             PracticeUtil::setFrozen($p->getPlayer(), false, true);
             PracticeUtil::setFrozen($o->getPlayer(), false, true);
         }
+    }
+
+    private function endRound(){
+
     }
 
     private function endDuel(bool $endPrematurely = false, bool $disablePlugin = false) : void {
@@ -678,7 +704,12 @@ class DuelGroup
                 }
             }
 
-            if($add === true) $this->oppHits[] = $hit;
+            if($add === true){
+                $this->oppHits[] = $hit;
+                $o = $this->getOpponent();
+                $player2hits = count($this->oppHits);
+                //$o->sendMessage((string)$player2hits);
+            }
 
         } elseif ($this->isOpponent($player)) {
 
@@ -695,7 +726,12 @@ class DuelGroup
                 }
             }
 
-            if($add === true) $this->playerHits[] = $hit;
+            if($add === true){
+                $this->playerHits[] = $hit;
+                $p = $this->getPlayer();
+                $player1hits = count($this->playerHits);
+                //$p->sendMessage((string)$player1hits);
+            }
         }
     }
 
