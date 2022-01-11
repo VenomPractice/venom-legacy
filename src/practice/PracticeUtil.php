@@ -421,7 +421,7 @@ class PracticeUtil
                     self::setCanFly($player, true);
                 }
             } else {
-                $p->getPlayer()->setGamemode(0);
+                $p->getPlayer()->setGamemode(3);
                 $p->setCanHitPlayer(true);
                 $p->setInvisible(false);
                 self::setCanFly($player, false);
