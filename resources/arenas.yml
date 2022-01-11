@@ -1,0 +1,12 @@
+---
+duel-arenas: []
+ffa-arenas:
+  NoDebuff:
+    build: false
+    spawn:
+      x: 584
+      "y": 14
+      z: 8
+    level: map4
+    kit: NoDebuff
+...
