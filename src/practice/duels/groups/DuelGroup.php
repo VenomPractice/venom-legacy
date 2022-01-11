@@ -34,7 +34,7 @@ class DuelGroup
 
     public const MAX_DURATION_MIN = 30;
 
-    public const MAX_END_DELAY_SEC = 1;
+    public const MAX_END_DELAY_SEC = 2;
 
     private $playerName;
     private $opponentName;
