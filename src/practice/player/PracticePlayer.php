@@ -310,6 +310,59 @@ class PracticePlayer
         $this->scoreboardType = 'scoreboard.duel';
     }
 
+
+
+    public function setBoxingScoreboard(DuelGroup $group) : void {
+        $playerHandler = PracticeCore::getPlayerHandler();
+
+        $this->scoreboard->clearScoreboard();
+
+        $opponent = ($group->isPlayer($this->playerName)) ? $group->getOpponent() : $group->getPlayer();
+
+        $name = $opponent->getPlayerName();
+
+        $opponentStr = PracticeUtil::str_replace($this->scoreboardNames['opponent'], ['%player%' => $name]);
+        $durationStr = PracticeUtil::str_replace($this->scoreboardNames['duration'], ['%time%' => '00:00']);
+
+
+        $arr = [$opponentStr, $durationStr];
+
+        $compare = PracticeUtil::getLineSeparator($arr);
+
+        $separator = ' ';
+        $separator2 = '';
+
+        $len = strlen($separator);
+
+        $len1 = strlen($compare);
+
+        $compare = substr($compare, 0, $len1 - 1);
+
+        $len1--;
+
+        if($len1 > $len) $separator = $compare;
+
+        if($this->deviceOs === PracticeUtil::WINDOWS_10) $separator .= PracticeUtil::WIN10_ADDED_SEPARATOR;
+
+        $this->scoreboard->addLine(0, ' ' . TextFormat::RED . TextFormat::WHITE . $separator2);
+
+        $this->scoreboard->addLine(1, ' ' . $opponentStr . ' ');
+
+        $this->scoreboard->addLine(3, ' ');
+
+        $this->scoreboard->addLine(4, ' §bHits§7: ');
+        $this->scoreboard->addLine(5, ' §aYou§7:§f 0' . '');
+        $this->scoreboard->addLine(6, ' §cThem§7:§f 0' . '');
+        $this->scoreboard->addLine(7, '   ');
+        $this->scoreboard->addLine(8, ' §bYour Ping§7:§f ' . $this->getPing() . ' ');
+
+        $this->scoreboard->addLine(9, ' §bTheir Ping§7:§f ' . $opponent->getPing() . ' ');
+
+        $this->scoreboard->addLine(10, ' ' . TextFormat::GREEN . TextFormat::WHITE . $separator2);
+
+        $this->scoreboardType = 'scoreboard.boxing';
+    }
+
     public function setFFAScoreboard(FFAArena $arena) : void {
 
         $this->scoreboard->clearScoreboard();
@@ -404,7 +457,8 @@ class PracticePlayer
 
     }
 
-    public function addCps(bool $clickedBlock): void {
+    public function addCps(bool $clickedBlock): void
+    {
 
         $microtime = microtime(true);
 
@@ -412,17 +466,17 @@ class PracticePlayer
 
         $size = count($keys);
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $cps = floatval($key);
-            if($microtime - $cps > 1)
+            if ($microtime - $cps > 1)
                 unset($this->cps[$key]);
         }
 
-        if($clickedBlock === true and $size > 0) {
+        if ($clickedBlock === true and $size > 0) {
             $index = $size - 1;
             $lastKey = $keys[$index];
             $cps = floatval($lastKey);
-            if(isset($this->cps[$lastKey])) {
+            if (isset($this->cps[$lastKey])) {
                 $val = $this->cps[$lastKey];
                 $diff = $microtime - $cps;
                 if ($val === true and $diff <= 0.05)
@@ -436,21 +490,30 @@ class PracticePlayer
 
         $yourCPSStr = PracticeUtil::str_replace($this->scoreboardNames['player-cps'], ['%player%' => 'Your', '%clicks%' => $yourCPS]);
 
-        if($this->scoreboardType === 'scoreboard.duel' and $this->isInDuel()) {
+        if ($this->scoreboardType === 'scoreboard.duel' and $this->isInDuel()) {
 
             $duel = PracticeCore::getDuelHandler()->getDuel($this->playerName);
 
-            if($duel->isDuelRunning() and $duel->arePlayersOnline()) {
+            if ($duel->isDuelRunning() and $duel->arePlayersOnline()) {
                 $theirCPSStr = PracticeUtil::str_replace($this->scoreboardNames['opponent-cps'], ['%player%' => 'Their', '%clicks%' => $yourCPS]);
                 $other = $duel->isPlayer($this->playerName) ? $duel->getOpponent() : $duel->getPlayer();
                 $p = $this->getPlayer();
-                $p->sendTip('§bCPS§7:§f ' . $yourCPS); 
+
 
             }
-        } elseif ($this->scoreboardType === 'scoreboard.ffa') {
-                $p = $this->getPlayer();
+        } elseif ($this->scoreboardType === 'scoreboard.boxing' and $this->isInDuel()) {
 
-                $p->sendTip('§bCPS§7:§f ' . $yourCPS); 
+            $duel = PracticeCore::getDuelHandler()->getDuel($this->playerName);
+
+            if ($duel->isDuelRunning() and $duel->arePlayersOnline()) {
+                $theirCPSStr = PracticeUtil::str_replace($this->scoreboardNames['opponent-cps'], ['%player%' => 'Their', '%clicks%' => $yourCPS]);
+                $other = $duel->isPlayer($this->playerName) ? $duel->getOpponent() : $duel->getPlayer();
+                $p = $this->getPlayer();
+                //$this->updateLineOfScoreboard(4, ' §aYou§7:§f ' . '');
+                //$this->updateLineOfScoreboard(5, ' §cThem§7:§f ' . '');
+                //$other->updateLineOfScoreboard(4, ' §aYou§7:§f ' . '');
+                //$other->updateLineOfScoreboard(5, ' §cThem§7:§f ' . '');
+            }
         }
     }
 
