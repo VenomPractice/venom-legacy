@@ -281,6 +281,10 @@ class DuelGroup
                 $p->setDuelScoreboard($this);
                 $o->setDuelScoreboard($this);
                 ScoreboardUtil::updateSpawnScoreboards();
+                }
+            if($this->isBoxing()){
+                $p->setBoxingScoreboard($this);
+                $o->setBoxingScoreboard($this);
             }
 
             if ($this->countdownTick % 20 === 0 and $this->countdownTick !== 0) {
@@ -404,6 +408,7 @@ class DuelGroup
         $durationStr = PracticeUtil::str_replace($d, ['%time%' => $duration]);
 
         if($this->isPlayerOnline()) {
+
             $p = $this->getPlayer();
             $p->updateLineOfScoreboard(2, ' ' . $durationStr);
         }
@@ -704,11 +709,31 @@ class DuelGroup
                 }
             }
 
-            if($add === true){
+            if($add === true) {
                 $this->oppHits[] = $hit;
-                $o = $this->getOpponent();
-                $player2hits = count($this->oppHits);
-                //$o->sendMessage((string)$player2hits);
+                if ($this->isBoxing()) {
+                    $p = $this->getPlayer();
+                    $o = $this->getOpponent();
+                    $player1hits = count($this->playerHits);
+                    $player2hits = count($this->oppHits);
+                    //$p->sendMessage((string)$player1hits);
+                    $p->updateLineOfScoreboard(3, ' ');
+                    $p->updateLineOfScoreboard(4, ' §bHits§7: ');
+                    $p->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player1hits . '');
+                    $p->updateLineOfScoreboard(6, ' §cThem§7:§f ' . $player2hits . '');
+
+                    $p->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
+                    $p->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
+
+
+                    $o->updateLineOfScoreboard(3, ' ');
+                    $o->updateLineOfScoreboard(4, ' §bHits§7: ');
+                    $o->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player2hits . '');
+                    $o->updateLineOfScoreboard(6, ' §cThem§7:§f ' . $player1hits . '');
+
+                    $o->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
+                    $o->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
+                }
             }
 
         } elseif ($this->isOpponent($player)) {
@@ -718,19 +743,42 @@ class DuelGroup
 
             $size = count($this->playerHits) - 1;
 
-            for($i = $size; $i > -1; $i--) {
+            for ($i = $size; $i > -1; $i--) {
                 $pastHit = $this->playerHits[$i];
-                if($pastHit->equals($hit)) {
+                if ($pastHit->equals($hit)) {
                     $add = false;
                     break;
                 }
             }
 
-            if($add === true){
-                $this->playerHits[] = $hit;
-                $p = $this->getPlayer();
-                $player1hits = count($this->playerHits);
-                //$p->sendMessage((string)$player1hits);
+            if ($add === true) {
+                if ($this->isBoxing()) {
+                    $this->playerHits[] = $hit;
+                    $p = $this->getPlayer();
+                    $o = $this->getOpponent();
+                    $player1hits = count($this->playerHits);
+                    $player2hits = count($this->oppHits);
+                    //$p->sendMessage((string)$player1hits);
+
+                    $o->updateLineOfScoreboard(3, ' ');
+                    $o->updateLineOfScoreboard(4, ' §bHits§7: ');
+                    $o->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player2hits . '');
+                    $o->updateLineOfScoreboard(6, ' §cThem§7:§f ' . $player1hits . '');
+
+                    $o->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
+                    $o->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
+
+                    $p->updateLineOfScoreboard(3, ' ');
+                    $p->updateLineOfScoreboard(4, ' §bHits§7: ');
+                    $p->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player1hits . '');
+                    $p->updateLineOfScoreboard(6, ' §cThem§7:§f ' . $player2hits . '');
+
+                    $p->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
+                    $p->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
+
+
+
+                }
             }
         }
     }
