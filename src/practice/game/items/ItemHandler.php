@@ -177,7 +177,7 @@ class ItemHandler
     {
 
         $exit_queue = new PracticeItem('exit.queue', 8, Item::get(Item::REDSTONE)->setCustomName(PracticeUtil::getName('leave-queue')), $this->getTextureOf(Item::get(Item::REDSTONE_DUST)));
-        $exit_spec = new PracticeItem('exit.spectator', 8, Item::get(Item::DYE, 1)->setCustomName(PracticeUtil::getName('spec-hub')), $this->getTextureOf(Item::get(Item::DYE)), false);
+        $exit_spec = new PracticeItem('exit.spectator', 8, Item::get(Item::AIR, 1)->setCustomName(PracticeUtil::getName('spec-hub')), $this->getTextureOf(Item::get(Item::AIR)), false);
         $exit_inv = new PracticeItem('exit.inventory', 8, Item::get(Item::DYE, 1)->setCustomName(TextFormat::RED . 'Exit'), $this->getTextureOf(Item::get(Item::DYE)));
 
         array_push($this->itemList, $exit_queue, $exit_spec, $exit_inv);
