@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace practice\player\gameplay;
 
-
+use practice\PracticeCore;
 use practice\PracticeUtil;
 
 class ChatHandler
@@ -18,7 +18,7 @@ class ChatHandler
     private $contents = [];
 
     public function __construct() {
-        $path = substr(__DIR__, 0, strpos(__DIR__, "/src/"));
+        $path = PracticeCore::getInstance()->getDataFolder();
         $contents = file($path . "/resources/filtered_words.txt");
 
         foreach($contents as $content) {
