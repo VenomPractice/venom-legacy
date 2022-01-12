@@ -11,6 +11,7 @@ namespace practice\duels\groups;
 use practice\player\PracticePlayer;
 use practice\PracticeCore;
 use practice\PracticeUtil;
+#Test
 
 class Request
 {
