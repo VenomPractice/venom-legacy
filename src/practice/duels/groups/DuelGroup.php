@@ -150,7 +150,6 @@ class DuelGroup
     }
 
     private function placeInDuel(PracticePlayer $p, PracticePlayer $o) : void {
-
         $p->placeInDuel($this);
         $o->placeInDuel($this);
     }
@@ -163,8 +162,7 @@ class DuelGroup
         $this->origPlayerTag = $nameTag;
     }
 
-    public function isOpponent($player): bool
-    {
+    public function isOpponent($player): bool {
         $result = false;
         if (PracticeCore::getPlayerHandler()->isPlayerOnline($player)) {
             $p = PracticeCore::getPlayerHandler()->getPlayer($player);
@@ -174,8 +172,7 @@ class DuelGroup
         return $result;
     }
 
-    public function isPlayer($player): bool
-    {
+    public function isPlayer($player): bool {
         $result = false;
 
         if (PracticeCore::getPlayerHandler()->isPlayerOnline($player)) {
@@ -190,16 +187,14 @@ class DuelGroup
     /**
      * @return \practice\player\PracticePlayer|null
      */
-    public function getPlayer()
-    {
+    public function getPlayer() {
         return PracticeCore::getPlayerHandler()->getPlayer($this->playerName);
     }
 
     /**
      * @return \practice\player\PracticePlayer|null
      */
-    public function getOpponent()
-    {
+    public function getOpponent() {
         return PracticeCore::getPlayerHandler()->getPlayer($this->opponentName);
     }
 
@@ -214,9 +209,7 @@ class DuelGroup
     public function endDuelPrematurely(bool $disablePlugin = false) : void {
 
         $winner = self::NONE;
-
         $loser = self::NONE;
-
         $premature = true;
 
         if($disablePlugin === true) $this->setDuelEnded();
@@ -248,7 +241,6 @@ class DuelGroup
         if($winner !== self::NONE and $loser !== self::NONE) {
 
             if($this->arePlayersOnline()){
-
                 $p = $this->getPlayer();
                 $playerDuelInfo = new DuelInvInfo($p->getPlayer(), $this->queue, count($this->playerHits));
 
@@ -256,7 +248,6 @@ class DuelGroup
                 $oppDuelInfo = new DuelInvInfo($o->getPlayer(), $this->queue, count($this->oppHits));
 
                 $p->addToDuelHistory($playerDuelInfo, $oppDuelInfo);
-
                 $o->addToDuelHistory($oppDuelInfo, $playerDuelInfo);
             }
         }
