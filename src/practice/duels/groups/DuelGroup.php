@@ -36,6 +36,8 @@ class DuelGroup
 
     public const MAX_END_DELAY_SEC = 2;
 
+    public const SUMO_POINTS = 0;
+
     private $playerName;
     private $opponentName;
     private $arenaName;
@@ -97,6 +99,7 @@ class DuelGroup
         $this->loserName = self::NONE;
         $this->arenaName = $arena;
 
+        #Venom
         $this->maxCountdownTicks = PracticeUtil::secondsToTicks(self::MAX_COUNTDOWN_SEC);
 
         $this->queue = $group->getQueue();
@@ -699,7 +702,6 @@ class DuelGroup
                     break;
                 }
             }
-
             if($add === true) {
                 $this->oppHits[] = $hit;
                 if ($this->isBoxing()) {
@@ -707,7 +709,7 @@ class DuelGroup
                     $o = $this->getOpponent();
                     $player1hits = count($this->playerHits);
                     $player2hits = count($this->oppHits);
-                    //$p->sendMessage((string)$player1hits);
+                    #Player
                     $p->updateLineOfScoreboard(3, ' ');
                     $p->updateLineOfScoreboard(4, ' §bHits§7: ');
                     $p->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player1hits . '');
@@ -716,7 +718,7 @@ class DuelGroup
                     $p->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
                     $p->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
 
-
+                    #Opponent
                     $o->updateLineOfScoreboard(3, ' ');
                     $o->updateLineOfScoreboard(4, ' §bHits§7: ');
                     $o->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player2hits . '');
@@ -749,16 +751,17 @@ class DuelGroup
                     $o = $this->getOpponent();
                     $player1hits = count($this->playerHits);
                     $player2hits = count($this->oppHits);
-                    //$p->sendMessage((string)$player1hits);
 
+                    #Opponent
                     $o->updateLineOfScoreboard(3, ' ');
                     $o->updateLineOfScoreboard(4, ' §bHits§7: ');
                     $o->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player2hits . '');
                     $o->updateLineOfScoreboard(6, ' §cThem§7:§f ' . $player1hits . '');
 
-                    $o->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
-                    $o->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
+                    $o->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $o->getPing() . ' ');
+                    $o->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $p->getPing() . ' ');
 
+                    #Player
                     $p->updateLineOfScoreboard(3, ' ');
                     $p->updateLineOfScoreboard(4, ' §bHits§7: ');
                     $p->updateLineOfScoreboard(5, ' §aYou§7:§f ' . $player1hits . '');
@@ -766,9 +769,6 @@ class DuelGroup
 
                     $p->updateLineOfScoreboard(8, ' §bYour Ping§7:§f ' . $p->getPing() . ' ');
                     $p->updateLineOfScoreboard(9, ' §bTheir Ping§7:§f ' . $o->getPing() . ' ');
-
-
-
                 }
             }
         }
