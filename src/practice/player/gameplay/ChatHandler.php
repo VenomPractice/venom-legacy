@@ -19,7 +19,7 @@ class ChatHandler
 
     public function __construct() {
         $path = PracticeCore::getInstance()->getDataFolder();
-        $contents = file($path . "/resources/filtered_words.txt");
+        $contents = file($path . "filtered_words.txt");
 
         foreach($contents as $content) {
             $content = strtolower(trim($content));
