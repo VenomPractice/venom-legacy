@@ -1065,9 +1065,9 @@ class PracticeListener implements Listener
 
             if($firstChar === '/') {
 
-                $usableCommandsInCombat = ['ping', 'tell', 'say'];
+                $usableCommandsInCombat = ['ping', 'tell', 'gamemode', 'freeze', 'feed', 'give', 'heal', 'unfreeze', 'tp', 'ban', 'pardon', 'say'];
 
-                $tests = ['/ping', '/tell', '/say', '/w'];
+                $tests = ['/ping', '/tell', '/say', 'gamemode', '/freeze', '/feed', '/give', '/heal', '/unfreeze', '/tp', '/ban', '/pardon',  '/w'];
 
                 if(PracticeUtil::str_contains('/me', $message)) {
                     $event->setCancelled(true);
