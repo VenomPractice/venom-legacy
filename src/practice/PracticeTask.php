@@ -34,9 +34,10 @@ class PracticeTask extends Task {
     public function __construct(PracticeCore $core) {
         $this->core = $core;
         $this->announcements = [
-            TextFormat::AQUA . 'See a hacker online? Use ' . TextFormat::YELLOW . '/report player' . TextFormat::AQUA .' to notify the staff of hackers on the server.',
-            TextFormat::AQUA . 'Find a bug on the server? Use ' . TextFormat::YELLOW . '/report bug' . TextFormat::AQUA . ' to notify the staff of bugs on the server.',
-            TextFormat::AQUA . 'Is a staff abusing or doing any other misconduct? Use ' . TextFormat::YELLOW . '/report staff' . TextFormat::AQUA . ' to notify the owner of abusing staff.'
+            TextFormat::AQUA . '§cYou can duel a player by typing /duel [player]!',
+            TextFormat::AQUA . '§cWant to spectate a fight? type the command /spectate [player]!',
+            TextFormat::AQUA . '§7Invite your friends via:§b venompvp.xyz§7!',
+            '§7Join our discord for updates and giveaways: §bdiscord.gg/venom§7!'
         ];
         $this->updateLeaderboardsTime = PracticeUtil::minutesToTicks(20);
     }
