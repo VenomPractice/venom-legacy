@@ -10,9 +10,11 @@ declare(strict_types=1);
 
 namespace practice;
 
+use pocketmine\block\BlockIds;
 use pocketmine\block\Liquid;
 use pocketmine\entity\Effect;
 use pocketmine\entity\EffectInstance;
+use pocketmine\entity\Entity;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockBurnEvent;
 use pocketmine\event\block\BlockFormEvent;
@@ -36,6 +38,7 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\player\PlayerRespawnEvent;
+use pocketmine\math\Vector3;
 use pocketmine\event\plugin\PluginDisableEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\event\server\DataPacketSendEvent;
@@ -43,6 +46,7 @@ use pocketmine\inventory\transaction\action\SlotChangeAction;
 use pocketmine\item\Bucket;
 use pocketmine\item\EnderPearl;
 use pocketmine\item\FlintSteel;
+use pocketmine\math\Vector3;
 use pocketmine\item\Food;
 use pocketmine\item\Item;
 use pocketmine\item\ItemBlock;
@@ -67,6 +71,9 @@ use practice\player\PlayerSpawnTask;
 use practice\player\RespawnTask;
 use practice\scoreboard\ScoreboardUtil;
 use practice\scoreboard\UpdateScoreboardTask;
+use pocketmine\event\player\PlayerMoveEvent;
+
+
 
 class PracticeListener implements Listener
 {
@@ -98,6 +105,13 @@ class PracticeListener implements Listener
             $this->core->getScheduler()->scheduleDelayedTask(new PlayerSpawnTask($pl), 10);
 
             $event->setJoinMessage(PracticeUtil::str_replace(PracticeUtil::getMessage('join-msg'), ['%player%' => $p->getName()]));
+        }
+    }
+
+    public function OnMove(PlayerMoveEvent $event)  {
+        $p = $event->getPlayer();
+        if($p->getLevel()->getBlockIdAt($p->getFloorX(), $p->getFloorY()-1, $p->getFloorZ()) === 41){
+            $p->setMotion(new Vector3(0, 2.1, 0));
         }
     }
 
