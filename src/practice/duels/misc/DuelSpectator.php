@@ -37,7 +37,8 @@ class DuelSpectator {
             //$pl->setScoreboard(Scoreboard::SPEC_SCOREBOARD);
         }*/
 
-        PracticeCore::getItemHandler()->spawnSpecItems($player);
+        $player->setGamemode(3);
+        $player->sendMessage("§eYou are now spectating a match!\nRun the command§7 /spawn§e to return to spawn.");
     }
 
     public function teleport(Position $pos) : void {
