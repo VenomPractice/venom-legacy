@@ -86,12 +86,12 @@ class ItemHandler
     private function initHubItems(): void
     {
 
-        $unranked = new PracticeItem('hub.unranked-duels', 0, Item::get(Item::IRON_SWORD)->setCustomName(PracticeUtil::getName('unranked-duels')), 'Iron Sword');
-        $ranked = new PracticeItem('hub.ranked-duels', 1, Item::get(Item::DIAMOND_SWORD)->setCustomName(PracticeUtil::getName('ranked-duels')), 'Diamond Sword');
-        $ffa = new PracticeItem('hub.ffa', 2, Item::get(Item::IRON_AXE)->setCustomName(PracticeUtil::getName('play-ffa')), 'Iron Axe');
-        $leaderboard = new PracticeItem('hub.leaderboard', 4, Item::get(Item::SKULL, 3, 1)->setCustomName(TextFormat::BLUE . '» ' . TextFormat::GREEN . 'Leaderboards ' . TextFormat::BLUE . '«'), 'Steve Head');
-        $settings = new PracticeItem('hub.settings', 7, Item::get(Item::CLOCK)->setCustomName(TextFormat::BLUE . '» ' . TextFormat::GOLD . 'Your Settings ' . TextFormat::BLUE . '«'), 'Clock');
-        $inv = new PracticeItem('hub.duel-inv', 8, Item::get(Item::CHEST)->setCustomName(PracticeUtil::getName('duel-inventory')), 'Chest');
+        $unranked = new PracticeItem('hub.unranked-duels', 0, Item::get(Item::STONE_SWORD)->setCustomName(PracticeUtil::getName('unranked-duels')), 'Stone Sword');
+        $ranked = new PracticeItem('hub.ranked-duels', 1, Item::get(Item::IRON_SWORD)->setCustomName(PracticeUtil::getName('ranked-duels')), 'Iron Sword');
+        $ffa = new PracticeItem('hub.ffa', 2, Item::get(Item::DIAMOND_SWORD)->setCustomName(PracticeUtil::getName('play-ffa')), 'Diamond Sword');
+        $leaderboard = new PracticeItem('hub.leaderboard', 4, Item::get(Item::BOOK, 3, 1)->setCustomName(TextFormat::BLUE . ' ' . TextFormat::GREEN . '§r§9»§l §bLeaderboards §r§9«' . TextFormat::BLUE . ''), 'Book');
+        $settings = new PracticeItem('hub.settings', 7, Item::get(Item::NETHER_STAR)->setCustomName(TextFormat::BLUE . ' ' . TextFormat::GOLD . '§r§9»§l §eSettings §r§9«' . TextFormat::BLUE . ''), 'Nether Star');
+        $inv = new PracticeItem('hub.duel-inv', 8, Item::get(Item::CLOCK)->setCustomName(PracticeUtil::getName('duel-inventory')), 'Clock');
 
         $this->itemList = [$unranked, $ranked, $ffa, $leaderboard, $settings, $inv];
 
