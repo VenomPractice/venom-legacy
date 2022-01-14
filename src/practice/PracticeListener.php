@@ -46,7 +46,6 @@ use pocketmine\inventory\transaction\action\SlotChangeAction;
 use pocketmine\item\Bucket;
 use pocketmine\item\EnderPearl;
 use pocketmine\item\FlintSteel;
-use pocketmine\math\Vector3;
 use pocketmine\item\Food;
 use pocketmine\item\Item;
 use pocketmine\item\ItemBlock;
@@ -62,6 +61,8 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use practice\anticheat\AntiCheatUtil;
 use practice\arenas\PracticeArena;
+use practice\duels\groups\DuelGroup;
+use practice\duels\misc\DuelInvInfo;
 use practice\game\FormUtil;
 use practice\game\inventory\InventoryUtil;
 use practice\game\inventory\menus\inventories\PracBaseInv;
@@ -171,6 +172,13 @@ class PracticeListener implements Listener
         }
     }
 
+    public function getPotCount(array $items)
+    {
+        return count(array_filter($items, function ($item) {
+            return ($item->getId() === Item::SPLASH_POTION) && $item->getDamage() === 22;
+        }));
+    }
+
     public function onDeath(PlayerDeathEvent $event): void {
 
         $p = $event->getPlayer();
@@ -222,11 +230,13 @@ class PracticeListener implements Listener
                             $attacker = $playerHandler->getPlayer($damgr);
 
                             $p = $attacker->getPlayer();
-
                             if(!$attacker->equals($player)) {
-
                                 $arena = $attacker->getCurrentArena();
-
+                                $loss = $event->getPlayer()->getName();
+                                $won = $attacker->getPlayer()->getName();
+                                $winnerp = $this->getPotCount($p->getInventory()->getContents());
+                                $loserp = $this->getPotCount($event->getPlayer()->getInventory()->getContents());
+                                $event->setDeathMessage("§a" . $loss . "§7[" . $loserp . "]§c died to §a" . $won . "§7[" . $winnerp . "]");
                                 if($arena->doesHaveKit()) {
                                     $event->setDrops([]);
                                     $kit = $arena->getFirstKit();
@@ -235,9 +245,10 @@ class PracticeListener implements Listener
 
                                 $p->setHealth($p->getMaxHealth());
 
+
                                 $kills = $playerHandler->addKillFor($attacker->getPlayerName());
                                 $killsStr = PracticeUtil::str_replace(PracticeUtil::getName('scoreboard.arena-ffa.kills'), ['%num%' => $kills]);
-                                $attacker->updateLineOfScoreboard(4, ' ' . $killsStr);
+                                $attacker->updateLineOfScoreboard(2, ' ' . $killsStr);
                             }
                         }
                     }
@@ -326,7 +337,7 @@ class PracticeListener implements Listener
             else {
 
                 if ($playerHandler->isPlayerOnline($name)) {
-                    
+
                     $player = $playerHandler->getPlayer($name);
 
                     $lvl = $player->getPlayer()->getLevel();
@@ -593,7 +604,7 @@ class PracticeListener implements Listener
             $exec = PracticeUtil::checkActions($action, PlayerInteractEvent::RIGHT_CLICK_BLOCK);
             if (($p->getDevice() !== PracticeUtil::WINDOWS_10 or $p->getInput() !== PracticeUtil::CONTROLS_MOUSE) and $exec === true)
                 $p->addCps(false);
-                //$p->addClick(false);
+            //$p->addClick(false);
 
             if ($itemHandler->isPracticeItem($item)) {
 
