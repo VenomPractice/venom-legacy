@@ -43,8 +43,7 @@ class PracticeEffect
 
     public function applyTo($player) : void {
         if($player instanceof Player){
-            $effect = new EffectInstance($this->effect, $this->duration * 20, $this->amplifier);
-            $effect->isVisible(false);
+            $effect = new EffectInstance($this->effect, $this->duration * 20, $this->amplifier, false);
             $player->addEffect($effect);
         }
     }

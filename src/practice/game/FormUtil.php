@@ -182,7 +182,7 @@ class FormUtil
             if($playerHandler->isPlayerOnline($event))
                 $formData = $playerHandler->getPlayer($event)->removeForm();
 
-          if(is_int($data) and $playerHandler->isPlayerOnline($event)) {
+            if(is_int($data) and $playerHandler->isPlayerOnline($event)) {
                 $arena = PracticeCore::getArenaHandler()->getFFAArena("NoDebuff");
                 $p->teleportToFFA($arena);
 
@@ -489,12 +489,12 @@ class FormUtil
                     if ($resultSB === true) {
 
                         if (!PracticeCore::getPlayerHandler()->isScoreboardEnabled($event->getName()));
-                            $p->showScoreboard();
+                        $p->showScoreboard();
 
                     } else {
 
                         if (PracticeCore::getPlayerHandler()->isScoreboardEnabled($event->getName()));
-                            $p->hideScoreboard();
+                        $p->hideScoreboard();
                     }
 
                     PracticeCore::getPlayerHandler()->enableScoreboard($event->getName(), $resultSB);
